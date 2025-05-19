@@ -33,8 +33,8 @@ python3 -m examples.client_example
 
 ## Exemplo de execução
 ```
-Operação 34 + 8 = 42
-Operação 55 - 11 = 44
-Operação 5 * 5 = 25
-Operação 33 / 11 = 3
+Resultado de 34 + 8: 42
+Resultado de 55 - 11: 44
+Resultado de 5 * 5: 25
+Resultado de 33 / 11: 3.0
 ```
