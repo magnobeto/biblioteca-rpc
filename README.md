@@ -9,12 +9,12 @@ python3 -m rpc.rpc_binder
 
 ### 2. Iniciar o servidor
 ```bash
-python3 examples/server_example.py
+python3 -m examples.server_example
 ```
 
 ### 3. Iniciar o cliente
 ```bash
-python3 examples/client_example.py
+python3 -m examples.client_example
 ```
 
 ## Como adicionar novos serviços
@@ -25,8 +25,8 @@ python3 examples/client_example.py
 
 ## Exemplo de execução
 ```
-Resultado de 5 + 3: 8
-Resultado de 4 * 2: 8
-Resultado de 5 - 3: 2
-Resultado de 4 / 2: 2.0
+Operação 34 + 8 = 42
+Operação 55 - 11 = 44
+Operação 5 * 5 = 25
+Operação 33 / 11 = 3
 ```
