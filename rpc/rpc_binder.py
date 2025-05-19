@@ -1,17 +1,17 @@
 import socket
 import threading
 
-class ServiceRegistryBinder:
+class Binder:
     def __init__(self, host='localhost', port=5050):
         self.binder_host = host
         self.binder_port = port
         self._services = {}
 
-    def start(self):
+    def start_binder(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.bind((self.binder_host, self.binder_port))
         sock.listen()
-        print(f"ServiceRegistryBinder ativo em {self.binder_host}:{self.binder_port}")
+        print(f"Binder ativo em {self.binder_host}:{self.binder_port}")
 
         while True:
             conn, _ = sock.accept()
@@ -40,5 +40,5 @@ class ServiceRegistryBinder:
             conn.close()
 
 if __name__ == "__main__":
-    binder = ServiceRegistryBinder()
-    binder.start()
+    binder = Binder()
+    binder.start_binder()
