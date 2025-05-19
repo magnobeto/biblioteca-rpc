@@ -1,5 +1,13 @@
 # Biblioteca RPC
 
+Esta biblioteca implementa um sistema simples de RPC (Remote Procedure Call) em Python, permitindo que métodos de serviços sejam chamados remotamente como se fossem locais. O sistema é composto por três principais componentes:
+
+- **Binder:** Responsável por registrar e localizar serviços disponíveis na rede.
+- **Servidor RPC:** Expõe métodos de uma classe de serviço para serem chamados remotamente.
+- **Cliente RPC:** Descobre e consome serviços remotos de forma transparente.
+
+A comunicação entre cliente e servidor é feita via sockets TCP, e os dados são serializados para facilitar a troca de informações.
+
 ## Como executar
 
 ### 1. Iniciar o Binder
