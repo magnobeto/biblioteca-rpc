@@ -1,44 +1,44 @@
 import socket
 import threading
 
-class Binder:
-    def __init__(self, host='localhost', port=5000):
-        self.host = host
-        self.port = port
-        self.services = {}
+class ServiceRegistryBinder:
+    def __init__(self, host='localhost', port=5050):
+        self.binder_host = host
+        self.binder_port = port
+        self._services = {}
 
-    def start_binder(self):
-        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        server.bind((self.host, self.port))
-        server.listen()
-        print(f"Binder iniciado em {self.host}:{self.port}")
+    def start(self):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind((self.binder_host, self.binder_port))
+        sock.listen()
+        print(f"ServiceRegistryBinder ativo em {self.binder_host}:{self.binder_port}")
 
         while True:
-            client_socket, _ = server.accept()
-            threading.Thread(target=self.handle_client, args=(client_socket,), daemon=True).start()
+            conn, _ = sock.accept()
+            threading.Thread(target=self._handle_request, args=(conn,), daemon=True).start()
 
-    def handle_client(self, client_socket):
+    def _handle_request(self, conn):
         try:
-            request = client_socket.recv(1024).decode()
-            parts = request.split('|')
-            command = parts[0]
+            data = conn.recv(1024).decode()
+            tokens = data.split('|')
+            action = tokens[0]
 
-            if command == "REGISTER":
-                _, service_name, ip, port = parts
-                self.services[service_name] = (ip, int(port))
-                client_socket.send(b"OK")
+            if action == "REGISTER":
+                _, service_name, service_ip, service_port = tokens
+                self._services[service_name] = (service_ip, int(service_port))
+                conn.sendall(b"REGISTERED")
 
-            elif command == "LOOKUP":
-                _, service_name = parts
-                if service_name in self.services:
-                    ip, port = self.services[service_name]
-                    client_socket.send(f"{ip}|{port}".encode())
+            elif action == "LOOKUP":
+                _, service_name = tokens
+                if service_name in self._services:
+                    service_ip, service_port = self._services[service_name]
+                    conn.sendall(f"{service_ip}|{service_port}".encode())
                 else:
-                    client_socket.send(b"NOT_FOUND")
+                    conn.sendall(b"NOT_FOUND")
 
         finally:
-            client_socket.close()
+            conn.close()
 
 if __name__ == "__main__":
-    binder = Binder()
-    binder.start_binder()
+    binder = ServiceRegistryBinder()
+    binder.start()

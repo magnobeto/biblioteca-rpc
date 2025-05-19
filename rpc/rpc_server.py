@@ -3,7 +3,7 @@ import threading
 from .serializer import serialize, deserialize
 
 class RPCServer:
-    def __init__(self, service, binder_host='localhost', binder_port=5000, service_name='service', server_host='localhost', server_port=0):
+    def __init__(self, service, binder_host='localhost', binder_port=5050, service_name='service', server_host='localhost', server_port=0):
         self.service = service
         self.binder_host = binder_host
         self.binder_port = binder_port

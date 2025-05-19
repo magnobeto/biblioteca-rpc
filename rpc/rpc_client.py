@@ -2,7 +2,7 @@ import socket
 from .serializer import serialize, deserialize
 
 class RPCClient:
-    def __init__(self, binder_host='localhost', binder_port=5000):
+    def __init__(self, binder_host='localhost', binder_port=5050):
         self.binder_host = binder_host
         self.binder_port = binder_port
 
